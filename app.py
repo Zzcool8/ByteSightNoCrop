@@ -3,13 +3,15 @@ from flask import Blueprint, jsonify
 import numpy as np
 import tensorflow as tf
 import onnxruntime
-from thresholdingfunction import otsuthresholding
+
+#import statement for crop, SHOULD NOT BE INCLUDED IN THIS VERSION
+##from thresholdingfunction import otsuthresholding
 #from classify import load_model, load_image_fromnumpy, predict_single
-from torchvision import datasets, models, transforms
-import torch
-import os
-from blackandwhiteratios import blackandwhiteratio
-from boundingbox import cropImage
+##from torchvision import datasets, models, transforms
+##import torch
+###import os
+###from blackandwhiteratios import blackandwhiteratio
+###from boundingbox import cropImage
 
 from helpers import (load_image, make_square, 
                      augment, pre_process, softmax)
@@ -48,7 +50,9 @@ def color_code(num):
 
 def run_inference(inf_file):
     # Preprocessing of the image happens here
-    useless, img, status=cropImage(impath, 'm', labelsfile, 21, 0.08)
+    img = load_image(inf_file)
+    #Cropping line is below, SHOULD NOT BE INCLUDED IN THIS VERSION
+    #useless, img, status=cropImage(impath, 'm', labelsfile, 21, 0.08)
     print("Image Loaded")
     img = make_square(img)
     img = augment(prep, img)
