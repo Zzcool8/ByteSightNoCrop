@@ -12,4 +12,4 @@ Jinja2
 MarkupSafe
 Werkzeug
 boto3==1.17.13
-logging==0.4.9.6
+
