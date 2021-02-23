@@ -39,7 +39,7 @@ def get_label():
     MosqID = request.files.get(MosquitoID)
     PicNum = request.files.get(PictureNumber)
     print("Got the file")
-    label = run_inference(inf_file)
+    label = run_inference(inf_file, MosqID, PicNum)
     
     
     
@@ -83,7 +83,7 @@ def color_code(num):
     else:
         return '#f7543b'
 
-def run_inference(inf_file):
+def run_inference(inf_file, MosqID, PicNum):
     # Preprocessing of the image happens here
     img = load_image(inf_file)
     originalimg = img
