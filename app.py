@@ -38,10 +38,10 @@ prep = pre_process(IMG_WIDTH, IMG_HEIGHT)
 @moz.route("/get_label", methods=['GET', 'POST'])
 def get_label():
     inf_file = request.files.get('image').read()
-    MosqID = request.files.get('MosquitoID').read()
-    PicNum = request.files.get('PictureNumber').read()
+    #MosqID = request.files.get('MosquitoID').read()
+    #PicNum = request.files.get('PictureNumber').read()
     print("Got the file")
-    label = run_inference(inf_file, MosqID, PicNum)
+    label = run_inference(inf_file)
     
     
     
@@ -105,7 +105,7 @@ def color_code(num):
     else:
         return '#f7543b'
 
-def run_inference(inf_file, mosquitoid, picnum):
+def run_inference(inf_file):
     # Preprocessing of the image happens here
     img = load_image(inf_file)
     originalimg = img
