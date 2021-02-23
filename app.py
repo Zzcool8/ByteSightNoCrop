@@ -38,8 +38,8 @@ prep = pre_process(IMG_WIDTH, IMG_HEIGHT)
 @moz.route("/get_label", methods=['GET', 'POST'])
 def get_label():
     inf_file = request.files.get('image').read()
-    MosqID = request.files.get(MosquitoID)
-    PicNum = request.files.get(PictureNumber)
+    MosqID = request.files.get('MosquitoID').read()
+    PicNum = request.files.get('PictureNumber').read()
     print("Got the file")
     label = run_inference(inf_file, MosqID, PicNum)
     
@@ -110,7 +110,7 @@ def color_code(num):
     else:
         return '#f7543b'
 
-def run_inference(inf_file, MosqID, PicNum):
+def run_inference(inf_file, mosquitoid, picnum):
     # Preprocessing of the image happens here
     img = load_image(inf_file)
     originalimg = img
@@ -139,7 +139,7 @@ def run_inference(inf_file, MosqID, PicNum):
     print("Spec ", CLASS_MAP[species][1])
     string_label = CLASS_MAP[species][1].split(" ")
     
-    fullfilename = MosqID.toString() + "_" + PicNum.toString() + "_" + string_label[0] + "_" + string_label[1]
+    fullfilename = mosquitoid.toString() + "_" + picnum.toString() + "_" + string_label[0] + "_" + string_label[1]
     fullbucket = 'photostakenduringpilotstudy'
     s3_file = 'PilotStudy'
     file = cv2.imwrite(fullfilename, originalimg)
