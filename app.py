@@ -4,11 +4,11 @@ import numpy as np
 import tensorflow as tf
 import onnxruntime
 import cv2
-##import boto3
-##from botocore.exceptions import NoCredentialsError
-import logging
 import boto3
-from botocore.exceptions import ClientError
+from botocore.exceptions import NoCredentialsError
+##import logging
+##import boto3
+##from botocore.exceptions import ClientError
 #import statement for crop, SHOULD NOT BE INCLUDED IN THIS VERSION
 ##from thresholdingfunction import otsuthresholding
 #from classify import load_model, load_image_fromnumpy, predict_single
@@ -53,46 +53,41 @@ def get_label():
     })
 
   
-##def upload_to_aws(local_file, bucket, s3_file):
-##    s3 = boto3.client('s3', aws_access_key_id= ACCESS_KEY, aws_secret_access_key= SECRET_KEY)
-##    try:
-##        s3.upload_file(local_file, bucket, s3_file)
-##        print("Upload Successful")
-##        return True
-##    except FileNotFoundError:
-##        print("The file was not found")
-##        return False
-##    except NoCredentialsError:
-##        print("Credentials not available")
-##        return False
-  
-  
-import logging
-import boto3
-from botocore.exceptions import ClientError
+def upload_to_aws(local_file, bucket, s3_file):
+    s3 = boto3.client('s3', aws_access_key_id= ACCESS_KEY, aws_secret_access_key= SECRET_KEY)
+    try:
+        s3.upload_file(local_file, bucket, s3_file)
+        print("Upload Successful")
+        return True
+    except FileNotFoundError:
+        print("The file was not found")
+        return False
+    except NoCredentialsError:
+        print("Credentials not available")
+        return False
 
 
-def upload_file(file_name, bucket, object_name=None):
-    """Upload a file to an S3 bucket
-
-    :param file_name: File to upload
-    :param bucket: Bucket to upload to
-    :param object_name: S3 object name. If not specified then file_name is used
-    :return: True if file was uploaded, else False
-    """
+#def upload_file(file_name, bucket, object_name=None):
+#    """Upload a file to an S3 bucket
+#
+#    :param file_name: File to upload
+#    :param bucket: Bucket to upload to
+#    :param object_name: S3 object name. If not specified then file_name is used
+#    :return: True if file was uploaded, else False
+#    """
 
     # If S3 object_name was not specified, use file_name
-    if object_name is None:
-        object_name = file_name
+#    if object_name is None:
+#        object_name = file_name
 
-    # Upload the file
-    s3_client = boto3.client('s3')
-    try:
-        response = s3_client.upload_file(file_name, bucket, object_name)
-    except ClientError as e:
-        logging.error(e)
-        return False
-    return True 
+#    # Upload the file
+#    s3_client = boto3.client('s3')
+#    try:
+#        response = s3_client.upload_file(file_name, bucket, object_name)
+#    except ClientError as e:
+#        logging.error(e)
+#        return False
+#    return True 
   
   
   
@@ -143,8 +138,8 @@ def run_inference(inf_file, mosquitoid, picnum):
     fullbucket = 'photostakenduringpilotstudy'
     s3_file = 'PilotStudy'
     file = cv2.imwrite(fullfilename, originalimg)
-    ##upload_to_aws(file, bucket , s3_file)
-    upload_file(file, fullbucket)
+    upload_to_aws(file, fullbucket , s3_file)
+    ##upload_file(file, fullbucket)
     return (string_label[0], string_label[1], str(prob), color_code(prob))
 
 app.register_blueprint(moz)
