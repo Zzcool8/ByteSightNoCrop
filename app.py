@@ -134,11 +134,11 @@ def run_inference(inf_file, mosquitoid, picnum):
     print("Spec ", CLASS_MAP[species][1])
     string_label = CLASS_MAP[species][1].split(" ")
     
-    fullfilename = mosquitoid.toString() + "_" + picnum.toString() + "_" + string_label[0] + "_" + string_label[1]
-    fullbucket = 'photostakenduringpilotstudy'
-    s3_file = 'PilotStudy'
-    file = cv2.imwrite(fullfilename, originalimg)
-    upload_to_aws(file, fullbucket , s3_file)
+   # fullfilename = mosquitoid.toString() + "_" + picnum.toString() + "_" + string_label[0] + "_" + string_label[1]
+    #fullbucket = 'photostakenduringpilotstudy'
+    #s3_file = 'PilotStudy'
+    #file = cv2.imwrite(fullfilename, originalimg)
+    #upload_to_aws(file, fullbucket , s3_file)
     ##upload_file(file, fullbucket)
     return (string_label[0], string_label[1], str(prob), color_code(prob))
 
