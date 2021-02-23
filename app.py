@@ -41,7 +41,7 @@ def get_label():
     MosqID = request.files.get('MosquitoID').read()
     PicNum = request.files.get('PictureNumber').read()
     print("Got the file")
-    label = run_inference(inf_file)
+    label = run_inference(inf_file, MosqID, PicNum)
     
     
     
@@ -105,7 +105,7 @@ def color_code(num):
     else:
         return '#f7543b'
 
-def run_inference(inf_file):
+def run_inference(inf_file, mosquitoid, picnum):
     # Preprocessing of the image happens here
     img = load_image(inf_file)
     originalimg = img
@@ -134,9 +134,9 @@ def run_inference(inf_file):
     print("Spec ", CLASS_MAP[species][1])
     string_label = CLASS_MAP[species][1].split(" ")
     
-   # fullfilename = mosquitoid.toString() + "_" + picnum.toString() + "_" + string_label[0] + "_" + string_label[1]
-    #fullbucket = 'photostakenduringpilotstudy'
-    #s3_file = 'PilotStudy'
+    fullfilename = mosquitoid + "_" + picnum + "_" + string_label[0] + "_" + string_label[1]
+    fullbucket = 'photostakenduringpilotstudy'
+    s3_file = 'PilotStudy'
     #file = cv2.imwrite(fullfilename, originalimg)
     #upload_to_aws(file, fullbucket , s3_file)
     ##upload_file(file, fullbucket)
