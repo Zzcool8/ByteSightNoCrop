@@ -4,8 +4,8 @@ import numpy as np
 import tensorflow as tf
 import onnxruntime
 import cv2
-#import boto3
-#from botocore.exceptions import NoCredentialsError
+import boto3
+from botocore.exceptions import NoCredentialsError
 ##import logging
 ##import boto3
 ##from botocore.exceptions import ClientError
@@ -53,18 +53,18 @@ def get_label():
     })
 
   
-#def upload_to_aws(local_file, bucket, s3_file):
-#    s3 = boto3.client('s3', aws_access_key_id= ACCESS_KEY, aws_secret_access_key= SECRET_KEY)
-#    try:
-#        s3.upload_file(local_file, bucket, s3_file)
-#        print("Upload Successful")
-#        return True
-#    except FileNotFoundError:
-#        print("The file was not found")
-#        return False
-#    except NoCredentialsError:
-#        print("Credentials not available")
-#        return False
+def upload_to_aws(local_file, bucket, s3_file):
+    s3 = boto3.client('s3', aws_access_key_id= ACCESS_KEY, aws_secret_access_key= SECRET_KEY)
+    try:
+        s3.upload_file(local_file, bucket, s3_file)
+        print("Upload Successful")
+        return True
+    except FileNotFoundError:
+        print("The file was not found")
+        return False
+    except NoCredentialsError:
+        print("Credentials not available")
+        return False
 
 
 #def upload_file(file_name, bucket, object_name=None):
@@ -137,8 +137,8 @@ def run_inference(inf_file, mosquitoid, picnum):
     fullfilename = mosquitoid + "_" + picnum + "_" + string_label[0] + "_" + string_label[1]
     fullbucket = 'photostakenduringpilotstudy'
     s3_file = 'PilotStudy'
-    #file = cv2.imwrite(fullfilename, originalimg)
-    #upload_to_aws(file, fullbucket , s3_file)
+    file = cv2.imwrite(fullfilename, originalimg)
+    upload_to_aws(file, fullbucket , s3_file)
     ##upload_file(file, fullbucket)
     return (string_label[0], string_label[1], str(prob), color_code(prob))
 
