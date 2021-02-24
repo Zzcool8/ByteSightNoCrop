@@ -23,8 +23,8 @@ from helpers import (load_image, make_square,
 from helper_config import (IMG_HEIGHT, IMG_WIDTH, CLASS_MAP,
                            CHANNELS)
 
-ACCESS_KEY = 'AKIAJA6OT4ISIU6Q4PBA'
-SECRET_KEY = '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'
+#ACCESS_KEY = 'AKIAJA6OT4ISIU6Q4PBA'
+#SECRET_KEY = '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'
 
 # Usually helps in debugging
 print(tf.__version__) # Print the version of tensorflow being used
@@ -38,10 +38,10 @@ prep = pre_process(IMG_WIDTH, IMG_HEIGHT)
 @moz.route("/get_label", methods=['GET', 'POST'])
 def get_label():
     inf_file = request.files.get('image').read()
-    MosqID = request.form.get('MosquitoID')
-    PicNum = request.form.get('PictureNumber')
+    #MosqID = request.form.get('MosquitoID')
+    #PicNum = request.form.get('PictureNumber')
     print("Got the file")
-    label = run_inference(inf_file, MosqID, PicNum)
+    label = run_inference(inf_file)
     
     
     
@@ -134,12 +134,13 @@ def run_inference(inf_file, mosquitoid, picnum):
     print("Spec ", CLASS_MAP[species][1])
     string_label = CLASS_MAP[species][1].split(" ")
     
-    fullfilename = mosquitoid + "_" + picnum + "_" + string_label[0] + "_" + string_label[1]
-    fullbucket = 'photostakenduringpilotstudy'
-    s3_file = 'PilotStudy'
-    file = cv2.imwrite(fullfilename, originalimg)
+    #fullfilename = mosquitoid + "_" + picnum + "_" + string_label[0] + "_" + string_label[1]
+    #fullbucket = 'photostakenduringpilotstudy'
+    #s3_file = 'PilotStudy'
+    #file = cv2.imwrite(fullfilename, originalimg)
     #upload_to_aws(file, fullbucket , s3_file)
     ##upload_file(file, fullbucket)
+    
     return (string_label[0], string_label[1], str(prob), color_code(prob))
 
 app.register_blueprint(moz)
