@@ -38,8 +38,8 @@ prep = pre_process(IMG_WIDTH, IMG_HEIGHT)
 @moz.route("/get_label", methods=['GET', 'POST'])
 def get_label():
     inf_file = request.files.get('image').read()
-    MosqID = request.files.get('MosquitoID')
-    PicNum = request.files.get('PictureNumber')
+    MosqID = request.files.get('MosquitoID').read()
+    PicNum = request.files.get('PictureNumber').read()
     print("Got the file")
     label = run_inference(inf_file, MosqID, PicNum)
     
