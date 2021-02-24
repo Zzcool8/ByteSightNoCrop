@@ -11,5 +11,6 @@ itsdangerous
 Jinja2
 MarkupSafe
 Werkzeug
-boto3==0.0.1
+boto3
+
 
